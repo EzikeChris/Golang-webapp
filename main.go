@@ -8,13 +8,6 @@ import (
 	"github.com/joho/godotenv"
 )
 
-// Basic HTTP WEB SERVER IN GOLANG //
-
-// Request Handler
-func indexhandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("<h1>Hello World!!"))
-}
-
 func main() {
 	err := godotenv.Load()
 	if err != nil {
@@ -28,6 +21,8 @@ func main() {
 	}
 
 	serverMux := http.NewServeMux()
-	serverMux.HandleFunc("/home", indexhandler)
+	serverMux.HandleFunc("/home", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("<h1>Hello World!!"))
+	})
 	log.Fatal(http.ListenAndServe(":"+port, serverMux))
 }
